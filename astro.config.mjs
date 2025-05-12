@@ -4,14 +4,11 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://sandonjurowski.com',
-  base: '/',
+  site: 'https://www.sandonjurowski.com/',
+  output: 'static',
   integrations: [
     tailwind(),
-    mdx({
-      syntaxHighlight: 'shiki',
-      shikiConfig: { theme: 'github-dark' }
-    }),
+    mdx({ syntaxHighlight: 'shiki', shikiTheme: 'github-dark' }),
     sitemap()
   ],
 });
