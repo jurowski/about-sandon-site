@@ -1,6 +1,6 @@
 # About Sandon Site
 
-A personal website showcasing information about Sandon Jurowski, built with modern web technologies and hosted on GitHub Pages.
+A personal website showcasing information about Sandon Jurowski, built with modern web technologies and hosted on GitHub Pages...
 
 ## 🚀 Features
 
