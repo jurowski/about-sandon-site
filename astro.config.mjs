@@ -8,7 +8,10 @@ export default defineConfig({
   base: '/',
   integrations: [
     tailwind(),
-    mdx(),
+    mdx({
+      syntaxHighlight: 'shiki',
+      shikiConfig: { theme: 'github-dark' }
+    }),
     sitemap()
   ],
 });

@@ -1,5 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+// Fetch all blog posts
+const posts = await getCollection('blog');
+// Sort posts by date, most recent first
+const sortedPosts = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
 ---
 
 <Layout title="Blog | Sandon Jurowski">
@@ -16,71 +25,36 @@ import Layout from '../../layouts/Layout.astro';
 
       <!-- Blog Posts Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Coming Soon Card -->
-        <article class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-          <div class="p-6">
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-              <time datetime="2024-01-01">Coming Soon</time>
-              <span class="mx-2">•</span>
-              <span>Technology</span>
+        {sortedPosts.map((post: CollectionEntry<'blog'>) => (
+          <article class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            <div class="p-6">
+              <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {new Date(post.data.pubDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <>
+                    <span class="mx-2">•</span>
+                    <span>{post.data.tags[0]}</span>
+                  </>
+                )}
+              </div>
+              <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
+                {post.data.title}
+              </h2>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                {post.data.description}
+              </p>
+              <a href={`/blog/${post.slug}`} class="text-primary-600 dark:text-primary-400 hover:underline">
+                Read more →
+              </a>
             </div>
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
-              My First Blog Post
-            </h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-4">
-              Stay tuned for my upcoming blog posts about technology, development, and design. I'll be sharing my thoughts, experiences, and insights on various topics.
-            </p>
-            <a href="#" class="text-primary-600 dark:text-primary-400 hover:underline">
-              Read more →
-            </a>
-          </div>
-        </article>
-
-        <!-- Coming Soon Card 2 -->
-        <article class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-          <div class="p-6">
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-              <time datetime="2024-01-01">Coming Soon</time>
-              <span class="mx-2">•</span>
-              <span>Development</span>
-            </div>
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
-              Building Modern Web Applications
-            </h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-4">
-              A deep dive into modern web development practices, tools, and techniques that I use in my projects.
-            </p>
-            <a href="#" class="text-primary-600 dark:text-primary-400 hover:underline">
-              Read more →
-            </a>
-          </div>
-        </article>
-      </div>
-
-      <!-- Newsletter Signup -->
-      <div class="mt-16 bg-primary-50 dark:bg-gray-800 rounded-lg p-8">
-        <div class="text-center">
-          <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-            Subscribe to My Newsletter
-          </h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">
-            Get notified when I publish new articles about technology and development.
-          </p>
-          <form class="max-w-md mx-auto flex gap-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              required
-            />
-            <button
-              type="submit"
-              class="px-6 py-2 text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded-md font-medium transition-colors"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>
