@@ -1,6 +1,6 @@
 ---
 // Import required modules
-import { getCollection } from 'astro:content';
+import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 // Generate static paths for all blog posts
@@ -14,33 +14,34 @@ export async function getStaticPaths() {
   });
 }
 
-// Get the post from props
-const { post } = Astro.props;
+const { slug } = Astro.params;
+const entry = await getEntryBySlug('blog', slug);
+if (!entry) throw new Error('Post not found');
 
 // Render the post content
-const { Content } = await post.render();
+const { Content } = await entry.render();
 ---
 
-<Layout title={post.data.title}>
+<Layout title={entry.data.title} description={entry.data.description}>
   <article class="py-20 bg-white dark:bg-gray-900">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <header class="mb-8">
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          {post.data.title}
+          {entry.data.title}
         </h1>
         <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-          <time datetime={post.data.pubDate.toISOString()}>
-            {new Date(post.data.pubDate).toLocaleDateString('en-US', {
+          <time datetime={entry.data.pubDate.toISOString()}>
+            {new Date(entry.data.pubDate).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric'
             })}
           </time>
-          {post.data.tags && post.data.tags.length > 0 && (
+          {entry.data.tags && entry.data.tags.length > 0 && (
             <>
               <span class="mx-2">•</span>
               <div class="flex gap-2">
-                {post.data.tags.map((tag) => (
+                {entry.data.tags.map((tag) => (
                   <span class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full text-xs">
                     {tag}
                   </span>
