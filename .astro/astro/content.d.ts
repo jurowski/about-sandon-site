@@ -158,13 +158,20 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".mdx"] };
-"reclaiming-your-narrative.mdx": {
-	id: "reclaiming-your-narrative.mdx";
-  slug: "reclaiming-your-narrative";
+"the-importance-of-systemic-trust.md": {
+	id: "the-importance-of-systemic-trust.md";
+  slug: "the-importance-of-systemic-trust";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
-} & { render(): Render[".mdx"] };
+} & { render(): Render[".md"] };
+"why-i-believe-in-open-ai-governance.md": {
+	id: "why-i-believe-in-open-ai-governance.md";
+  slug: "why-i-believe-in-open-ai-governance";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 };
 
 	};
