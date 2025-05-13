@@ -2,7 +2,7 @@
 
 A personal website showcasing information about Sandon Jurowski, built with modern web technologies and hosted on GitHub Pages...
 
-## 🚀 Features 
+## 🚀 Features
 
 - Responsive design
 - Modern UI/UX
