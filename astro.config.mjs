@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.sandonjurowski.com/',
   output: 'static',
+  base: '/',
   integrations: [
     mdx({ syntaxHighlight: 'shiki', shikiTheme: 'github-dark' }),
     sitemap()
